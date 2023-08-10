@@ -1,22 +1,25 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand text-white" href="#">{{ config.titulo }}_{{ config.versao }}</a>
+        <a class="navbar-brand text-white" href="#">{{ config.titulo }} <small>{{ config.versao }}</small></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link :to="{name: 'Home'}" class="nav-link text-white">
+              <router-link
+                :to="{name: 'Home'}" 
+                class="nav-link text-white"
+              >
                 Dashboard
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link  :to="{name: 'ItensClientes'}" class="nav-link text-white">
                 Clientes
               </router-link>
-            </li>
+            </li> -->
           </ul>
           <span style="font-size: 10pt;" class="navbar-text text-end d-flex align-items-center">
             <div class="text-end text-white me-3">{{ this.nome }}<br> <span class="fw-normal">{{ this.email }}</span></div>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import ItensClientes from '@/components/Cliente/ItensClientes';
-import InfoCliente from '@/components/Cliente/InfoCliente';
+import FtGrupo from '@/components/Grupo/FtGrupo';
+// import InfoCliente from '@/components/Cliente/InfoCliente';
 import PaginaHome from '@/components/Paginas/PaginaHome';
 import PaginaLogin from '@/components/Paginas/PaginaLogin';
 import PaginaLogout from '@/components/Paginas/PaginaLogout';
@@ -27,15 +27,15 @@ const router = createRouter({
             component: PaginaLogout
         },
         {
-            name: 'ItensClientes',
-            path: '/clientes',
-            component: ItensClientes
+            name: 'FtGrupo',
+            path: '/grupos',
+            component: FtGrupo
         },
-        {
-            name: 'InfoCliente',
-            path: '/cliente/:id',
-            component: InfoCliente
-        },
+        // {
+        //     name: 'InfoCliente',
+        //     path: '/cliente/:id',
+        //     component: InfoCliente
+        // },
         {
             name: 'PaginaErro',
             path: '/erro/:codigo/:descricao',

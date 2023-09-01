@@ -2,7 +2,6 @@ import axios from 'axios';
 import Token from './Token';
 import config from '@/config';
 import Usuario from './Usuario';
-import { useStore } from 'vuex';
 
 function AxiosHttp(){
 
@@ -12,12 +11,8 @@ function AxiosHttp(){
             'Authorization': 'Bearer ' + token
         }
     }
-    
-    function get(route, callback = null, callbackErro = null){
-        
-        const store = useStore();
 
-        store.dispatch({type: 'defineEstadoLoader', loader: true});
+    function get(route, callback = null, callbackErro = null){
         
         axios
             .get(config.baseURL + route, options)
@@ -25,9 +20,7 @@ function AxiosHttp(){
                 if(callback != null){
                     callback(response.data);
                 }
-                store.dispatch({type: 'defineEstadoLoader', loader: false});
             }).catch(e => {
-                store.dispatch({type: 'defineEstadoLoader', loader: false});
                 if(callbackErro != null){
                     callbackErro(e.response.data);
                 } else {
@@ -41,20 +34,56 @@ function AxiosHttp(){
     }
 
     function post(route, data = {}, callback = null, callbackErro = null){
-
-        const store = useStore();
-        
-        store.dispatch({type: 'defineEstadoLoader', loader: true});
         
         axios
             .post(config.baseURL + route, data, options)
             .then(function(response){
-                store.dispatch({type: 'defineEstadoLoader', loader: false});
                 if(callback != null){
                     callback(response.data);
                 }
             }).catch(e => {
-                store.dispatch({type: 'defineEstadoLoader', loader: false});
+                if(callbackErro != null){
+                    callbackErro(e.response.data);
+                } else {
+                    if(e.response.status == 401){
+                        Token().remove();
+                        Usuario().remove();
+                    }
+                    window.location = '#/erro/'+e.response.status+'/'+btoa(e.response.data.msg);
+                }
+            });
+    }
+
+    function del(route, callback = null, callbackErro = null){
+        
+        axios
+            .delete(config.baseURL + route, options)
+            .then(function(response){
+                if(callback != null){
+                    callback(response.data);
+                }
+            }).catch(e => {
+                if(callbackErro != null){
+                    callbackErro(e.response.data);
+                } else {
+                    if(e.response.status == 401){
+                        Token().remove();
+                        Usuario().remove();
+                    }
+                    window.location = '#/erro/'+e.response.status+'/'+btoa(e.response.data.msg);
+                }
+            });
+    }
+    
+    function put(route, data = {}, callback = null, callbackErro = null){
+        
+        axios
+            .put(config.baseURL + route, data, options)
+            .then(function(response){
+                if(callback != null){
+                    callback(response.data);
+                }
+            }).catch(e => {
                 if(callbackErro != null){
                     callbackErro(e.response.data);
                 } else {
@@ -110,6 +139,8 @@ function AxiosHttp(){
     return {
         get: get,
         post: post,
+        del: del,
+        put: put,
         login: login,
         logout: logout
     }

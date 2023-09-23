@@ -16,11 +16,11 @@
             class="list-group mt-4"
         >
             <li v-for="grupo in grupos" :key="grupo.id" class="list-group-item">
-                <div class="row">
-                    <div class="col-sm-12 col-md-8">
+                <div class="row align-items-center">
+                    <div class="col-9">
                         {{ grupo.nome }}
                     </div>
-                    <div class="col-sm-12 col-md-4 botoes-acao">
+                    <div class="col-3 botoes-acao"  >
                         <router-link :to="{name: 'FormEditarGrupo', params: { id: grupo.id }}">
                             <button
                                 type="button" 
@@ -92,11 +92,6 @@ export default {
 </script>
 
 <style scoped>
-    @media (max-width: 765px) {
-        .botoes-acao {
-            margin-top: 16px;
-        }
-    }
     .list-group-item:hover{
         background-color: #f5f5f5;
         cursor: pointer;

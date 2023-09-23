@@ -5,28 +5,33 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link
-                :to="{name: 'Home'}" 
-                class="nav-link text-white"
-              >
-                Dashboard
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="d-flex justify-content-between w-100 align-items-center">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <router-link
+                  :to="{name: 'Home'}" 
+                  class="nav-link text-white"
+                >
+                  Dashboard
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link 
+                  :to="{name: 'IndexGrupo'}" 
+                  class="nav-link text-white"
+                >
+                  Grupos
+                </router-link>
+              </li>
+            </ul>
+            <span style="font-size: 10pt;" class="navbar-text text-end d-flex align-items-center">
+              <div class="text-end text-white me-3">{{ this.nome }}<br> <span class="fw-normal">{{ this.email }}</span></div>
+              <router-link :to="{name: 'Logout'}" class="nav-link text-white">
+                <button @click="logout" class="btn btn-sm btn-info text-white mt-2 mb-2">Sair</button>
               </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link  :to="{name: 'IndexGrupo'}" class="nav-link text-white">
-                Grupos
-              </router-link>
-            </li>
-          </ul>
-          <span style="font-size: 10pt;" class="navbar-text text-end d-flex align-items-center">
-            <div class="text-end text-white me-3">{{ this.nome }}<br> <span class="fw-normal">{{ this.email }}</span></div>
-            <router-link :to="{name: 'Logout'}" class="nav-link text-white">
-              <button @click="logout" class="btn btn-sm btn-info text-white mt-2 mb-2">Sair</button>
-            </router-link>
-          </span>
+            </span>
+          </div>
         </div>
       </div>
     </nav>
@@ -52,10 +57,7 @@ export default {
         defineLogado: 'defineLogado',
         defineEstadoNavBar: 'defineEstadoNavBar'
     })
-	},
-  mounted(){
-
-  }
+	}
 }
 
 </script>

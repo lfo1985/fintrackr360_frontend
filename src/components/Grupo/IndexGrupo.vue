@@ -20,21 +20,21 @@
                     <div class="col-sm-12 col-md-8">
                         {{ grupo.nome }}
                     </div>
-                    <div class="col-sm-12 col-md-4 text-end botoes-acao">
-                        <button 
-                            class="btn btn-sm btn-danger me-2"
-                            @click="apagar(grupo.id)"
-                        >
-                            Apagar
-                        </button>
+                    <div class="col-sm-12 col-md-4 botoes-acao">
                         <router-link :to="{name: 'FormEditarGrupo', params: { id: grupo.id }}">
                             <button
                                 type="button" 
                                 class="btn btn-sm btn-info text-white"
                             >
-                                Editar
+                            <fa icon="pencil" />
                             </button>
                         </router-link>
+                        <button 
+                            class="btn btn-sm btn-danger ms-2"
+                            @click="apagar(grupo.id)"
+                        >
+                            <fa icon="trash" />
+                        </button>
                     </div>
                 </div>
             </li>
@@ -48,6 +48,7 @@
 <script>
 
 import AxiosHttp from '@/helpers/AxiosHttp';
+import router from '@/router';
 import params from '@/store/params';
 import { mapActions } from 'vuex';
 
@@ -68,6 +69,9 @@ export default {
                 this.grupos = response.data; 
                 this.defineEstadoLoader(params.LOADER_HIDE);
             });
+        },
+        editar: function(id){
+            router.push({name: 'FormEditarGrupo', params: { id: id }});
         },
         apagar: function(id){
             if(confirm('Tem certeza que deseja apagar?')){
@@ -91,7 +95,17 @@ export default {
     @media (max-width: 765px) {
         .botoes-acao {
             margin-top: 16px;
-            text-align: left!important;
         }
+    }
+    .list-group-item:hover{
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+    .list-group-item {
+        border-left: 8px solid black;
+    }
+    .botoes-acao {
+        display: flex;
+        justify-content: end;
     }
 </style>

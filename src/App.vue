@@ -1,7 +1,7 @@
 <template>
 	<ItemLoader v-if="loader" />
 	<NavBar v-if="navBar" />
-	<div class="container-fluid w-75 mt-3">
+	<div class="container-fluid mt-3">
         <router-view />
     </div>
 </template>
@@ -31,7 +31,8 @@ export default {
 
 <style lang="scss">
   #app {
-    font-family: 'Segoe UI';
+    font-family: 'Tahoma';
+	font-size: 12pt;
     color: #2c3e50;
   }
 </style>

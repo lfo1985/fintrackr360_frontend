@@ -11,7 +11,9 @@ import {
     faInfoCircle,
     faCircleXmark,
     faFloppyDisk,
-    faArrowCircleLeft
+    faArrowCircleLeft,
+    faTrash,
+    faPencil
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faDiagramProject);
@@ -24,5 +26,7 @@ library.add(faInfoCircle);
 library.add(faCircleXmark);
 library.add(faFloppyDisk);
 library.add(faArrowCircleLeft);
+library.add(faTrash);
+library.add(faPencil);
 
 export default FontAwesomeIcon;

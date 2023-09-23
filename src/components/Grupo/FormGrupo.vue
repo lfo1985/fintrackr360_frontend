@@ -3,7 +3,7 @@
         <h5 class="bg-light d-block p-2 rounded">
             <fa icon="floppy-disk" />
             <b>
-                Grupos - Criar
+                Grupos - {{ grupo.id ? 'Editar' : 'Criar' }}
             </b>
         </h5>
         <form>

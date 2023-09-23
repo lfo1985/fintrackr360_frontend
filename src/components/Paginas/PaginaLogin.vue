@@ -1,7 +1,7 @@
 <template>
-    <h3 class="text-center mt-3">{{ config.titulo }}_{{ config.versao }}</h3>
+    <h3 class="text-center mt-3">{{ config.titulo }} {{ config.versao }}</h3>
     <div class="d-flex align-items-center justify-content-center">
-        <form class="w-25 border rounded p-3">
+        <form class="border rounded p-3">
             <div class="mb-3">
                 <label for="inputEmail" class="form-label">E-mail</label>
                 <input type="email" v-model="dadosLogin.email" class="form-control" id="inputEmail" aria-describedby="emailHelp">

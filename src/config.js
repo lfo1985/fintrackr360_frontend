@@ -1,5 +1,5 @@
 export default {
     titulo: 'FinTracker360',
-    versao: 'beta',
-    baseURL: 'http://localhost:8000/api/'
+    versao: 'BETA',
+    baseURL: 'http://54.91.130.29/data/api/'
 }

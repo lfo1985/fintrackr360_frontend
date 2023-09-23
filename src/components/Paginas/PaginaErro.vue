@@ -11,6 +11,8 @@
 </template>
 
 <script>
+
+import {ir, voltar} from '@/helpers/Default';
 import { mapActions } from 'vuex';
 import params from '@/store/params';
 
@@ -29,9 +31,9 @@ export default {
     }),
     voltar: function(){
         if(this.codigo == 401){
-            this.$router.push('/login');
+            ir('/login');
         } else {
-            this.$router.go(-1);
+            voltar();
         }
     }
   },

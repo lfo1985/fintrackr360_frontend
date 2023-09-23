@@ -16,7 +16,7 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link  :to="{name: 'FtGrupo'}" class="nav-link text-white">
+              <router-link  :to="{name: 'IndexGrupo'}" class="nav-link text-white">
                 Grupos
               </router-link>
             </li>

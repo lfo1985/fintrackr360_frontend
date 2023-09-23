@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import FtGrupo from '@/components/Grupo/FtGrupo';
-// import InfoCliente from '@/components/Cliente/InfoCliente';
+import IndexGrupo from '@/components/Grupo/IndexGrupo';
+import FormGrupo from '@/components/Grupo/FormGrupo';
 import PaginaHome from '@/components/Paginas/PaginaHome';
 import PaginaLogin from '@/components/Paginas/PaginaLogin';
 import PaginaLogout from '@/components/Paginas/PaginaLogout';
@@ -27,15 +27,20 @@ const router = createRouter({
             component: PaginaLogout
         },
         {
-            name: 'FtGrupo',
+            name: 'IndexGrupo',
             path: '/grupos',
-            component: FtGrupo
+            component: IndexGrupo
         },
-        // {
-        //     name: 'InfoCliente',
-        //     path: '/cliente/:id',
-        //     component: InfoCliente
-        // },
+        {
+            name: 'FormGrupo',
+            path: '/grupos/criar',
+            component: FormGrupo
+        },
+        {
+            name: 'FormEditarGrupo',
+            path: '/grupos/editar/:id',
+            component: FormGrupo
+        },
         {
             name: 'PaginaErro',
             path: '/erro/:codigo/:descricao',

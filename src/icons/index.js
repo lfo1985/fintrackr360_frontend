@@ -9,7 +9,9 @@ import {
     faArrowLeftLong,
     faCheck,
     faInfoCircle,
-    faCircleXmark
+    faCircleXmark,
+    faFloppyDisk,
+    faArrowCircleLeft
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faDiagramProject);
@@ -20,5 +22,7 @@ library.add(faCheck);
 library.add(faInfo);
 library.add(faInfoCircle);
 library.add(faCircleXmark);
+library.add(faFloppyDisk);
+library.add(faArrowCircleLeft);
 
 export default FontAwesomeIcon;

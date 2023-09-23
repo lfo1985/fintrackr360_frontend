@@ -6,14 +6,16 @@
                 Grupos
             </b>
         </h5>
-        <button class="btn btn-success mt-2">
-            Criar novo grupo
-        </button>
+        <router-link :to="{name: 'FormGrupo'}">
+            <button class="btn btn-success mt-2">
+                Criar novo grupo
+            </button>
+        </router-link>
         <ul 
             v-if="grupos.length > 0" 
             class="list-group mt-4"
         >
-            <li  v-for="grupo in grupos" :key="grupo.id" class="list-group-item">
+            <li v-for="grupo in grupos" :key="grupo.id" class="list-group-item">
                 <div class="row">
                     <div class="col-sm-12 col-md-8">
                         {{ grupo.nome }}
@@ -25,7 +27,14 @@
                         >
                             Apagar
                         </button>
-                        <button class="btn btn-sm btn-info text-white">Editar</button>
+                        <router-link :to="{name: 'FormEditarGrupo', params: { id: grupo.id }}">
+                            <button
+                                type="button" 
+                                class="btn btn-sm btn-info text-white"
+                            >
+                                Editar
+                            </button>
+                        </router-link>
                     </div>
                 </div>
             </li>
@@ -43,7 +52,7 @@ import params from '@/store/params';
 import { mapActions } from 'vuex';
 
 export default {
-    name: 'FtGrupo',
+    name: 'IndexGrupo',
     data() {
         return {
             grupos: []

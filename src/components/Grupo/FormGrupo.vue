@@ -61,11 +61,9 @@ export default {
         }
     },
     methods: {
-
         ...mapActions({
             defineEstadoLoader: 'defineEstadoLoader'
         }),
-
         buscar: function(){
 
             if(this.$route.params.id){
@@ -80,11 +78,9 @@ export default {
             
 
         },
-
         voltar: function(){
             voltar();
         },
-
         salvar: function(){
 
             this.defineEstadoLoader(params.LOADER_SHOW);
@@ -108,7 +104,6 @@ export default {
         focusInput: function(){
             this.$refs.nome.focus();
         }
-
     },
     created(){
         this.buscar();

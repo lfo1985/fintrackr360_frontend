@@ -8,6 +8,7 @@
         </h5>
         <router-link :to="{name: 'FormGrupo'}">
             <button class="btn btn-success mt-2">
+                <fa icon="plus" />
                 Criar novo grupo
             </button>
         </router-link>
@@ -96,7 +97,7 @@ export default {
             
             this.buscar(pagina);
             this.paginaAtual = pagina;
-            
+
         },
         buscar: function(pagina = null){
 

@@ -1,7 +1,7 @@
 <template>
     <div class="text-start">
         <h5 class="bg-light d-block p-2 rounded">
-            <fa icon="diagram-project" />
+            <fa icon="list" />
             <b>
                 Grupos
             </b>
@@ -42,13 +42,37 @@
         <div v-else class="alert alert-danger mt-4" role="alert">
             Nenhum registro encontrado!
         </div>
+        <div class="mt-5">
+            <nav aria-label="Paginação de dados">
+                <ul class="pagination">
+                    <li 
+                        v-for="(pag, i) in paginacao" 
+                        :key="i" 
+                        :class="{
+                            'page-item': true,
+                            'disabled': (pag.url == null),
+                            'active': paginaAtual == pag.label
+                        }"
+                    >
+                        <button
+                            type="button" 
+                            class="page-link" 
+                            :href="pag.url"
+                            v-html="pag.label"
+                            @click="irPagina(pag.url)"
+                        >
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 
 <script>
 
+import {ir, parametrosUrl} from '@/helpers/Default';
 import AxiosHttp from '@/helpers/AxiosHttp';
-import router from '@/router';
 import params from '@/store/params';
 import { mapActions } from 'vuex';
 
@@ -56,32 +80,56 @@ export default {
     name: 'IndexGrupo',
     data() {
         return {
-            grupos: []
+            grupos: [],
+            paginacao: [],
+            paginaAtual: 1
         }
     },
     methods: {
         ...mapActions({
             defineEstadoLoader: 'defineEstadoLoader'
         }),
-        buscar: function(){
+        irPagina: function(url){
+
+            let parametros = parametrosUrl(url);
+            let pagina = parametros[0].valor;
+            
+            this.buscar(pagina);
+            this.paginaAtual = pagina;
+            
+        },
+        buscar: function(pagina = null){
+
             this.defineEstadoLoader(params.LOADER_SHOW);
-            AxiosHttp().get('grupos', response => {
-                this.grupos = response.data; 
-                this.defineEstadoLoader(params.LOADER_HIDE);
-            });
+
+            AxiosHttp()
+                .get('grupos'+(pagina ? '?page='+pagina : ''), response => {
+                    this.grupos = response.data;
+                    this.paginacao = response.meta.links;
+                    this.defineEstadoLoader(params.LOADER_HIDE);
+                    console.log(this.paginacao);
+                });
+
         },
         editar: function(id){
-            router.push({name: 'FormEditarGrupo', params: { id: id }});
+            ir({name: 'FormEditarGrupo', params: { id: id }});
         },
         apagar: function(id){
+
             if(confirm('Tem certeza que deseja apagar?')){
+            
                 this.defineEstadoLoader(params.LOADER_SHOW);
+            
                 AxiosHttp().del('grupos/'+id, () => {
+
                     this.defineEstadoLoader(params.LOADER_HIDE);
-                    alert('Excluído com sucesso!');
+                    
                     this.buscar();
+
                 });
+
             }
+
         }
     },
     created(){
@@ -94,10 +142,6 @@ export default {
 <style scoped>
     .list-group-item:hover{
         background-color: #f5f5f5;
-        cursor: pointer;
-    }
-    .list-group-item {
-        border-left: 8px solid black;
     }
     .botoes-acao {
         display: flex;

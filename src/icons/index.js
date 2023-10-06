@@ -13,7 +13,8 @@ import {
     faFloppyDisk,
     faArrowCircleLeft,
     faTrash,
-    faPencil
+    faPencil,
+    faList
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faDiagramProject);
@@ -28,5 +29,6 @@ library.add(faFloppyDisk);
 library.add(faArrowCircleLeft);
 library.add(faTrash);
 library.add(faPencil);
+library.add(faList);
 
 export default FontAwesomeIcon;

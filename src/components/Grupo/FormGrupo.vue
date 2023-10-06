@@ -88,8 +88,6 @@ export default {
             const callbackSalvar = () => {
 
                 this.defineEstadoLoader(params.LOADER_SHOW);
-                
-                alert('Salvo com sucesso!');
 
                 ir('/grupos');
             
@@ -105,11 +103,9 @@ export default {
             this.$refs.nome.focus();
         }
     },
-    created(){
-        this.buscar();
-    },
     mounted(){
         this.focusInput();
+        this.buscar();
     }
 }
 

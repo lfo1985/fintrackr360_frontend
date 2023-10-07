@@ -33,8 +33,21 @@ function parametrosUrl(url){
 
 }
 
+function json2array(json){
+
+    let arrayKeys = Object.keys(json);
+    let arrayValues = Object.values(json);
+    // console.log(arrayKeys);
+    // console.log(arrayValues);
+    let dados = arrayKeys.map((value, i) => {
+        return arrayValues[i] = value;
+    });
+    console.log(dados);
+}
+
 export {
     ir,
     voltar,
-    parametrosUrl
+    parametrosUrl,
+    json2array
 };

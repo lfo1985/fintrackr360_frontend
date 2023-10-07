@@ -27,9 +27,6 @@
                             {{ grupo.nome }}
                         </button>
                     </li>
-                    <!-- <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                 </ul>
             </div>
         </div>
@@ -48,10 +45,13 @@
                     <div class="col-md-1">
                         {{ conta.valor }}
                     </div>
-                    <div class="col-md-1">
-                        {{ conta.periodo.length > 1 ? conta.periodo.length+' parcelas' : 'a vista' }}
+                    <div :class="{
+                        'col-md-1': conta.tipo != 'RECORRENTE',
+                        'col-md-2': conta.tipo == 'RECORRENTE',
+                    }">
+                        {{ conta.tipo }}
                     </div>
-                    <div class="col-md-1">
+                    <div v-if="conta.tipo != 'RECORRENTE'" class="col-md-1">
                         {{ conta.periodo.length }}x de {{ conta.valor_parcela }}
                     </div>
                     <div class="col-md-3 botoes-acao">
@@ -127,7 +127,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            defineEstadoLoader: 'defineEstadoLoader'
+            defineEstadoLoader: 'defineEstadoLoader',
+            defineEstadoIdGrupo: 'defineEstadoIdGrupo',
         }),
         irPagina: function(url){
 
@@ -141,6 +142,9 @@ export default {
         buscar: function(id_grupo, pagina = null){
 
             this.defineEstadoLoader(params.LOADER_SHOW);
+            this.defineEstadoIdGrupo({idGrupo: id_grupo});
+
+            this.idGrupo = id_grupo;
 
             AxiosHttp()
                 .get('contas/grupo/'+id_grupo+(pagina ? '?page='+pagina : ''), response => {
@@ -164,14 +168,14 @@ export default {
         apagar: function(id){
 
             if(confirm('Tem certeza que deseja apagar?')){
-            
+
                 this.defineEstadoLoader(params.LOADER_SHOW);
             
                 AxiosHttp().del('contas/'+id, () => {
 
                     this.defineEstadoLoader(params.LOADER_HIDE);
                     
-                    this.buscar();
+                    this.buscar(this.idGrupo, this.paginaAtual);
 
                 });
 
@@ -180,7 +184,10 @@ export default {
         }
     },
     created(){
-        // this.buscar();
+        if(this.$store.getters.idGrupo){
+            this.buscar(this.$store.getters.idGrupo);
+            this.defineEstadoIdGrupo({idGrupo: null});
+        }
         this.carregarGrupos();
     }
 }

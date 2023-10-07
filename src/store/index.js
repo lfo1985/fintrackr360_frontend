@@ -9,7 +9,8 @@ const store = createStore({
             rotaAnterior: null,
             loader: false,
             usuario: null,
-            navBar: true
+            navBar: true,
+            idGrupo: null
         }
     },
     getters: {
@@ -27,6 +28,9 @@ const store = createStore({
         },
         navBar(state){
             return state.navBar;
+        },
+        idGrupo(state){
+            return state.idGrupo;
         }
     },
     mutations: {
@@ -44,6 +48,9 @@ const store = createStore({
         },
         alteraEstadoNavBar(state, value){
             state.navBar = value;
+        },
+        alteraEstadoIdGrupo(state, value){
+            state.idGrupo = value;
         }
     },
     actions: {
@@ -61,6 +68,9 @@ const store = createStore({
         },
         defineEstadoNavBar({commit}, obj){
             commit('alteraEstadoNavBar', obj.navBar);
+        },
+        defineEstadoIdGrupo({commit}, obj){
+            commit('alteraEstadoIdGrupo', obj.idGrupo);
         }
     }
 });

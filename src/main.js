@@ -10,6 +10,7 @@ import store from './store';
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueMask from '@devindex/vue-mask';
 import config from './config';
 
 
@@ -19,5 +20,6 @@ createApp(App)
     .component("fa", icons)
     .use(store)
     .use(router)
+    .use(VueMask)
     .use(VueAxios, axios)
     .mount('#app');

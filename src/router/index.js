@@ -55,8 +55,8 @@ const router = createRouter({
         },
         {
             name: 'FormEditarConta',
-            path: '/contas/editar/:id',
-            component: FormGrupo
+            path: '/contas/:id',
+            component: FormConta
         },
         {
             name: 'PaginaErro',

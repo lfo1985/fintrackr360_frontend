@@ -24,6 +24,14 @@
                   Grupos
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link 
+                  :to="{name: 'IndexConta'}" 
+                  class="nav-link text-white"
+                >
+                  Contas
+                </router-link>
+              </li>
             </ul>
             <span style="font-size: 10pt;" class="navbar-text text-end d-flex align-items-center">
               <div class="text-end text-white me-3">{{ this.nome }}<br> <span class="fw-normal">{{ this.email }}</span></div>

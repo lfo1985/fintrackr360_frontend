@@ -10,7 +10,7 @@
                 <label for="inputSenha" class="form-label">Senha</label>
                 <input type="password" v-model="dadosLogin.password" class="form-control" id="inputSenha">
             </div>
-            <button type="button" @click="login" class="btn btn-primary">Conectar</button>
+            <button type="button" @click="login" class="btn btn-primary w-100">Conectar</button>
         </form>
     </div>
 </template>

@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import IndexGrupo from '@/components/Grupo/IndexGrupo';
 import FormGrupo from '@/components/Grupo/FormGrupo';
+import IndexConta from '@/components/Conta/IndexConta';
+import FormConta from '@/components/Conta/FormConta';
 import PaginaHome from '@/components/Paginas/PaginaHome';
 import PaginaLogin from '@/components/Paginas/PaginaLogin';
 import PaginaLogout from '@/components/Paginas/PaginaLogout';
@@ -39,6 +41,21 @@ const router = createRouter({
         {
             name: 'FormEditarGrupo',
             path: '/grupos/editar/:id',
+            component: FormGrupo
+        },
+        {
+            name: 'IndexConta',
+            path: '/contas',
+            component: IndexConta
+        },
+        {
+            name: 'FormConta',
+            path: '/contas/criar',
+            component: FormConta
+        },
+        {
+            name: 'FormEditarConta',
+            path: '/contas/editar/:id',
             component: FormGrupo
         },
         {

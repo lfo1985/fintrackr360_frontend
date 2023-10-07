@@ -77,6 +77,7 @@
                     v-model="conta.tipo"
                     aria-label="Selecione o tipo"
                     :disabled="conta.id != null"
+                    @change="defineUmaParcela"
                 >
                     <option 
                         v-for="tipo in tipos"
@@ -85,6 +86,22 @@
                         v-html="tipo.nome"
                     ></option>
                 </select>
+            </div>
+            <div class="mb-3 col-md-1">
+                <label 
+                    for="titulo"
+                    class="form-label"
+                >
+                    Periodos
+                </label>
+                <input 
+                    type="number"
+                    class="form-control"
+                    v-model="conta.periodos"
+                    v-mask-number
+                    ref="periodos"
+                    :disabled="conta.id != null || conta.tipo == 'A_VISTA'"
+                >
             </div>
             <div class="mb-3 col-md-1">
                 <label 
@@ -101,22 +118,6 @@
                     v-model="conta.valor"
                     ref="valor"
                     v-mask-decimal.br="2"
-                >
-            </div>
-            <div class="mb-3 col-md-1">
-                <label 
-                    for="titulo"
-                    class="form-label"
-                >
-                    Periodos
-                </label>
-                <input 
-                    type="number"
-                    class="form-control"
-                    v-model="conta.periodos"
-                    v-mask-number
-                    ref="periodos"
-                    :disabled="conta.id != null"
                 >
             </div>
             <div class="mb-3 col-md-2">
@@ -207,6 +208,8 @@ export default {
                     this.defineEstadoLoader(params.LOADER_HIDE);
                     this.defineEstadoIdGrupo({idGrupo: this.conta.id_grupo});
                 });
+            } else {
+                this.conta.id_grupo = this.$store.getters.idGrupo;
             }
 
         },
@@ -227,9 +230,10 @@ export default {
             const callbackSalvar = () => {
 
                 this.defineEstadoLoader(params.LOADER_SHOW);
+                this.defineEstadoIdGrupo({idGrupo: this.conta.id_grupo});
 
                 ir({name: 'IndexConta'});
-            
+                
             }
             if(this.$route.params.id){
                 AxiosHttp().put('contas/'+this.$route.params.id, this.conta, callbackSalvar);
@@ -240,6 +244,15 @@ export default {
         },
         focusInput: function(){
             this.$refs.titulo.focus();
+        },
+        focusInputPeriodo: function(){
+            this.$refs.periodos.focus();
+        },
+        defineUmaParcela: function(){
+            if(!this.conta.id){
+                this.conta.periodos = 1;
+            }
+            this.focusInputPeriodo();
         }
     },
     mounted(){

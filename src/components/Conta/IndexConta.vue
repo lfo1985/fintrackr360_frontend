@@ -6,7 +6,7 @@
                 Contas
             </b>
         </h5>
-        <div class="botoes-superiores">
+        <div class="botoes-superiores mt-3">
             <router-link :to="{name: 'FormConta'}">
                 <button id="botao-adicionar-conta" class="btn btn-success">
                     <fa icon="plus" />
@@ -15,7 +15,7 @@
             </router-link>
             <div class="dropdown ms-2">
                 <button id="botao-menu-grupos" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Selecione um grupo
+                    Grupo
                 </button>
                 <ul class="dropdown-menu">
                     <li v-for="grupo in grupos" :key="grupo.id">
@@ -30,28 +30,31 @@
                 </ul>
             </div>
         </div>
+        <div class="mt-3 bg-light p-3 border rounded">
+            Grupo selecionado: <strong>{{ nomeGrupo() }}</strong>
+        </div>
         <ul 
             v-if="contas.length > 0" 
             class="list-group mt-4"
         >
             <li v-for="conta in contas" :key="conta.id" class="list-group-item">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
-                        {{ conta.titulo }}
-                    </div>
                     <div class="col-md-2">
-                        <strong>{{ conta.grupo.nome }}</strong>
+                        <div class="badge text-bg-secondary">{{ conta.grupo.nome }}</div>
+                    </div>
+                    <div class="col-md-3">
+                        {{ conta.titulo }}
                     </div>
                     <div class="col-md-1">
                         {{ conta.valor }}
                     </div>
                     <div :class="{
                         'col-md-1': conta.tipo != 'RECORRENTE',
-                        'col-md-2': conta.tipo == 'RECORRENTE',
+                        'col-md-3': conta.tipo == 'RECORRENTE'
                     }">
-                        {{ conta.tipo }}
+                        {{ conta.nome_tipo }}
                     </div>
-                    <div v-if="conta.tipo != 'RECORRENTE'" class="col-md-1">
+                    <div v-if="conta.tipo != 'RECORRENTE'" class="col-md-2">
                         {{ conta.periodo.length }}x de {{ conta.valor_parcela }}
                     </div>
                     <div class="col-md-3 botoes-acao">
@@ -181,12 +184,21 @@ export default {
 
             }
 
+        },
+        nomeGrupo: function(){
+            if(this.grupos.length > 0 && this.$store.getters.idGrupo){
+                let grupo = this.grupos.filter(item => {
+                    return item.id == this.$store.getters.idGrupo;
+                });
+                return grupo[0].nome;
+            } else {
+                return '-Nenhum grupo selecionado-';
+            }
         }
     },
     created(){
         if(this.$store.getters.idGrupo){
             this.buscar(this.$store.getters.idGrupo);
-            this.defineEstadoIdGrupo({idGrupo: null});
         }
         this.carregarGrupos();
     }

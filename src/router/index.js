@@ -4,6 +4,7 @@ import IndexGrupo from '@/components/Grupo/IndexGrupo';
 import FormGrupo from '@/components/Grupo/FormGrupo';
 import IndexConta from '@/components/Conta/IndexConta';
 import FormConta from '@/components/Conta/FormConta';
+import IndexRelatorio from '@/components/Relatorio/IndexRelatorio';
 import PaginaHome from '@/components/Paginas/PaginaHome';
 import PaginaLogin from '@/components/Paginas/PaginaLogin';
 import PaginaLogout from '@/components/Paginas/PaginaLogout';
@@ -52,6 +53,11 @@ const router = createRouter({
             name: 'FormConta',
             path: '/contas/criar',
             component: FormConta
+        },
+        {
+            name: 'IndexRelatorio',
+            path: '/relatorio',
+            component: IndexRelatorio
         },
         {
             name: 'FormEditarConta',

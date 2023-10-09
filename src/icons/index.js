@@ -14,7 +14,8 @@ import {
     faArrowCircleLeft,
     faTrash,
     faPencil,
-    faList
+    faList,
+    faMagnifyingGlass
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faDiagramProject);
@@ -30,5 +31,6 @@ library.add(faArrowCircleLeft);
 library.add(faTrash);
 library.add(faPencil);
 library.add(faList);
+library.add(faMagnifyingGlass);
 
 export default FontAwesomeIcon;

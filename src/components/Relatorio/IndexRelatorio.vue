@@ -88,22 +88,20 @@
                             <table class="table w-100">
                                 <tbody>
                                     <tr v-for="conta in item.conta" :key="conta.id">
-                                        <template v-if="conta.periodo.length > 0">
-                                            <td>
-                                                <div>{{ conta.titulo }}</div>
-                                                <div style="font-size: 13px; color: #8b8b8b;" v-if="conta.descricao">{{ conta.descricao }}</div>
-                                            </td>
-                                            <td
-                                                :class="{
-                                                    'text-end': true,
-                                                    'text-danger': conta.natureza == 'D',
-                                                    'text-info': conta.natureza == 'C',
-                                                    'align-middle': true
-                                                }"
-                                            >
-                                                {{ conta.periodo.length > 0 ? conta.periodo[0].valor_formatado : 0 }}
-                                            </td>
-                                        </template>
+                                        <td>
+                                            <div>{{ conta.titulo }}</div>
+                                            <div style="font-size: 13px; color: #8b8b8b;" v-if="conta.descricao">{{ conta.descricao }}</div>
+                                        </td>
+                                        <td
+                                            :class="{
+                                                'text-end': true,
+                                                'text-danger': conta.natureza == 'D',
+                                                'text-info': conta.natureza == 'C',
+                                                'align-middle': true
+                                            }"
+                                        >
+                                            {{ conta.periodo.valor_formatado }}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -168,7 +166,7 @@ export default {
             this.defineEstadoLoader(params.LOADER_SHOW);
             AxiosHttp()
                 .get('relatorio/'+this.mes+'/'+this.ano, response => {
-                    this.dados = response.data;
+                    this.dados = response;
                     this.resultados();
                 });
         },

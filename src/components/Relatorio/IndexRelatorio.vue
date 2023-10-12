@@ -60,6 +60,10 @@
                 </div>
             </div>
         </div>
+        <p class="text-info">
+            <fa icon="info-circle" />
+            Para definir uma conta como paga, basta clicar sobre o título da mesma!
+        </p>
         <div class="mt-4 col-md-6">
             <div class="accordion" id="accordionRelatorio">
                 <div 
@@ -85,11 +89,17 @@
                         data-bs-parent="#accordionRelatorio"
                     >
                         <div class="accordion-body">
+                            <button type="button" @click="definirStatusTodas(item.conta)" class="btn btn-success mb-3">
+                                <fa icon="check" />
+                                Marcar todas como pago
+                            </button>
                             <table class="table w-100">
                                 <tbody>
                                     <tr v-for="conta in item.conta" :key="conta.id">
                                         <td>
-                                            <div>{{ conta.titulo }}</div>
+                                            <fa v-if="conta.periodo.status == 'PENDENTE'" icon="clock" class="me-2 text-danger" />
+                                            <fa v-if="conta.periodo.status == 'PAGO'" icon="check" class="me-2 text-success" />
+                                            <a @click="defineStatus(conta.periodo.id, conta.periodo.status)">{{ conta.titulo }}</a>
                                             <div style="font-size: 13px; color: #8b8b8b;" v-if="conta.descricao">{{ conta.descricao }}</div>
                                         </td>
                                         <td
@@ -155,6 +165,8 @@ export default {
             saldoAcumulado: 0,
             classeAcumulado: '',
             classeSaldo: '',
+            periodos: [],
+            periodosAterarStatus: []
         }
     },
     methods: {
@@ -166,8 +178,19 @@ export default {
             this.defineEstadoLoader(params.LOADER_SHOW);
             AxiosHttp()
                 .get('relatorio/'+this.mes+'/'+this.ano, response => {
+
                     this.dados = response;
+
+                    this.dados.forEach(grupo => {
+                        grupo.conta.forEach(itemConta => {
+                            this.periodos[itemConta.id] = itemConta.periodo;
+                        });
+                    });
+
+                    this.defineEstadoLoader(params.LOADER_HIDE);
+
                     this.resultados();
+
                 });
         },
         meses: function(){
@@ -188,7 +211,35 @@ export default {
                     this.classeSaldo = response[this.ano+'-'+this.mes].CLASSE_SALDO;
                     this.defineEstadoLoader(params.LOADER_HIDE);
                 });
-        }
+        },
+        defineStatus: function(idPeriodo, statusPeriodo){
+            
+            this.defineEstadoLoader(params.LOADER_SHOW);
+
+            var status = statusPeriodo == 'PAGO' ? 'PENDENTE' : 'PAGO';
+
+            const callbackSalvar = () => {
+                this.buscar();
+            }
+            
+            AxiosHttp()
+                .patch('relatorio/definir-status/'+idPeriodo+'/'+status, {}, callbackSalvar);
+
+        },
+        definirStatusTodas: function(contas){
+            
+            contas.forEach(itemConta => {
+                this.periodosAterarStatus.push(itemConta.periodo.id);
+            });
+            
+            const callbackSalvar = () => {
+                this.buscar();
+            }
+
+            AxiosHttp()
+                .patch('relatorio/definir-status-todas', {periodos: this.periodosAterarStatus}, callbackSalvar);
+
+        },
     },
     mounted(){
         this.buscar();
@@ -197,3 +248,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+    .pago{
+        background-color: rgb(207, 255, 207);
+    }
+</style>

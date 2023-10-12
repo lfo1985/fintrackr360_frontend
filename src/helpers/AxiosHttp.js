@@ -96,6 +96,27 @@ function AxiosHttp(){
             });
     }
 
+    function patch(route, data = {}, callback = null, callbackErro = null){
+        
+        axios
+            .patch(config.baseURL + route, data, options)
+            .then(function(response){
+                if(callback != null){
+                    callback(response.data);
+                }
+            }).catch(e => {
+                if(callbackErro != null){
+                    callbackErro(e.response.data);
+                } else {
+                    if(e.response.status == 401){
+                        Token().remove();
+                        Usuario().remove();
+                    }
+                    window.location = '#/erro/'+e.response.status+'/'+btoa(e.response.data.msg);
+                }
+            });
+    }
+
     function login(credentials, callback = null, callbackErro = null){
         
         axios
@@ -141,6 +162,7 @@ function AxiosHttp(){
         post: post,
         del: del,
         put: put,
+        patch: patch,
         login: login,
         logout: logout
     }

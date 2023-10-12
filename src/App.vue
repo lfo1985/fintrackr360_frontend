@@ -67,4 +67,12 @@ export default {
 		align-items: center;
 		flex-wrap: wrap;
 	}
+	a {
+		color: #000000!important;
+		text-decoration: none!important;
+		cursor: pointer;
+	}
+	a:hover {
+		color: #a5a5a5!important;
+	}
 </style>

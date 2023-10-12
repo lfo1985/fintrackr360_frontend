@@ -92,6 +92,7 @@ export default {
                 ir('/grupos');
             
             }
+            
             if(this.$route.params.id){
                 AxiosHttp().put('grupos/'+this.$route.params.id, this.grupo, callbackSalvar);
             } else {

@@ -60,11 +60,87 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 mb-4 mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="rounded border border-secondary border-1 p-2 mb-2">
+                        <h4>Débito</h4>
+                        <div class="row mb-2">
+                            <div class="col-md-12 col-xs-12">
+                                Total de lançamentos débito: {{ totalLancamentoDebito }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="text-start col-md-12 col-xs-12">
+                                Total de contas pagas: {{ totalPagoDebito }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12 mt-2">
+                                <div class="progress">
+                                    <div 
+                                        :class="{
+                                            'progress-bar': true,
+                                            'bg-success': percentualDebitoPagoFloat == 100,
+                                            'bg-info': percentualDebitoPagoFloat < 100,
+                                        }"
+                                        role="progressbar"
+                                        :style="{
+                                            width: percentualDebitoPagoFloat+'%'
+                                        }"
+                                        aria-valuenow="0"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        {{ percentualDebitoPagoString }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="rounded border border-secondary  border-1 p-2 mb-2">
+                        <h4>Crédito</h4>
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                Total de lançamentos: {{ totalLancamentoCredito }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                Total de contas recebidas: {{ totalRecebidoCredito }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12 mt-2">
+                                <div class="progress">
+                                    <div 
+                                        :class="{
+                                            'progress-bar': true,
+                                            'bg-success': percentualCreditoRecebidoFloat == 100,
+                                            'bg-info': percentualCreditoRecebidoFloat < 100,
+                                        }"
+                                        role="progressbar"
+                                        :style="{
+                                            width: percentualCreditoRecebidoFloat+'%'
+                                        }"
+                                        aria-valuenow="0"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        {{ percentualCreditoRecebidoString }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <p class="text-info">
             <fa icon="info-circle" />
             Para definir uma conta como paga, basta clicar sobre o título da mesma!
         </p>
-        <div class="mt-4 col-md-6">
+        <div v-if="dados.length > 0" class="mt-4 col-md-6">
             <div class="accordion" id="accordionRelatorio">
                 <div 
                     v-for="item in dados"
@@ -120,6 +196,9 @@
                 </div>
             </div>
         </div>
+        <div v-else class="text-danger">
+            <p>Nenhuma conta encontrada para este mês!</p>
+        </div>
         <div class="mt-4 bg-light rounded p-2 border col-md-6">
             <table class="table">
                 <tr>
@@ -166,7 +245,15 @@ export default {
             classeAcumulado: '',
             classeSaldo: '',
             periodos: [],
-            periodosAterarStatus: []
+            periodosAterarStatus: [],
+            totalRecebidoCredito: 0,
+            totalPagoDebito: 0,
+            totalLancamentoCredito: 0,
+            totalLancamentoDebito: 0,
+            percentualCreditoRecebidoString: '',
+            percentualDebitoPagoString: '',
+            percentualCreditoRecebidoFloat: 0,
+            percentualDebitoPagoFloat: 0,
         }
     },
     methods: {
@@ -175,7 +262,9 @@ export default {
             defineEstadoIdGrupo: 'defineEstadoIdGrupo',
         }),
         buscar: function(){
+            
             this.defineEstadoLoader(params.LOADER_SHOW);
+
             AxiosHttp()
                 .get('relatorio/'+this.mes+'/'+this.ano, response => {
 
@@ -189,7 +278,24 @@ export default {
 
                     this.defineEstadoLoader(params.LOADER_HIDE);
 
-                    this.resultados();
+                    this.totalCredito = 0;
+                    this.totalDebito = 0;
+                    this.saldoMes = 0;
+                    this.saldoAcumulado = 0;
+                    this.classeAcumulado = '';
+                    this.classeSaldo = '';
+                    this.totalRecebidoCredito = 0;
+                    this.totalPagoDebito = 0;
+                    this.totalLancamentoCredito = 0;
+                    this.totalLancamentoDebito = 0;
+                    this.percentualCreditoRecebidoString = '';
+                    this.percentualDebitoPagoString = '';
+                    this.percentualCreditoRecebidoFloat = 0;
+                    this.percentualDebitoPagoFloat = 0;
+
+                    if(this.dados.length > 0){
+                        this.resultados();
+                    }
 
                 });
         },
@@ -209,6 +315,14 @@ export default {
                     this.saldoAcumulado = response[this.ano+'-'+this.mes].SALDO_ACUMULADO;
                     this.classeAcumulado = response[this.ano+'-'+this.mes].CLASSE_ACUMULADO;
                     this.classeSaldo = response[this.ano+'-'+this.mes].CLASSE_SALDO;
+                    this.totalRecebidoCredito = response[this.ano+'-'+this.mes].TOTAL_RECEBIDO_CREDITO;
+                    this.totalPagoDebito = response[this.ano+'-'+this.mes].TOTAL_PAGO_DEBITO;
+                    this.totalLancamentoCredito = response[this.ano+'-'+this.mes].TOTAL_LANCAMENTOS_CREDITO;
+                    this.totalLancamentoDebito = response[this.ano+'-'+this.mes].TOTAL_LANCAMENTOS_DEBITO;
+                    this.percentualCreditoRecebidoString = response[this.ano+'-'+this.mes].PERCENTUAL_CREDITO_RECEBIDO_STRING;
+                    this.percentualDebitoPagoString = response[this.ano+'-'+this.mes].PERCENTUAL_DEBITO_PAGO_STRING;
+                    this.percentualCreditoRecebidoFloat = response[this.ano+'-'+this.mes].PERCENTUAL_CREDITO_RECEBIDO_FLOAT;
+                    this.percentualDebitoPagoFloat = response[this.ano+'-'+this.mes].PERCENTUAL_DEBITO_PAGO_FLOAT;
                     this.defineEstadoLoader(params.LOADER_HIDE);
                 });
         },

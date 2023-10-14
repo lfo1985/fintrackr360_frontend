@@ -42,7 +42,7 @@
                     <div class="col-md-2">
                         <div class="badge text-bg-secondary">{{ conta.grupo.nome }}</div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         {{ conta.titulo }}
                     </div>
                     <div class="col-md-1">
@@ -53,9 +53,6 @@
                         'col-md-3': conta.tipo == 'RECORRENTE'
                     }">
                         {{ conta.nome_tipo }}
-                    </div>
-                    <div v-if="conta.tipo != 'RECORRENTE'" class="col-md-2">
-                        {{ conta.periodo.length }}x de {{ conta.valor_parcela }}
                     </div>
                     <div class="col-md-3 botoes-acao">
                         <router-link :to="{name: 'FormEditarConta', params: { id: conta.id }}">
@@ -96,9 +93,9 @@
                     >
                         <button
                             type="button" 
-                            class="page-link" 
+                            class="page-link"
                             :href="pag.url"
-                            v-html="pag.label"
+                            v-html="pag.label == 'pagination.next' ? 'Próximo' : (pag.label == 'pagination.previous' ? 'Anterior' : pag.label)"
                             @click="irPagina(pag.url)"
                         >
                         </button>
@@ -142,14 +139,14 @@ export default {
             this.paginaAtual = pagina;
 
         },
-        buscar: function(id_grupo, pagina = null){
+        buscar: async function(id_grupo, pagina = null){
 
             this.defineEstadoLoader(params.LOADER_SHOW);
             this.defineEstadoIdGrupo({idGrupo: id_grupo});
 
             this.idGrupo = id_grupo;
 
-            AxiosHttp()
+            await AxiosHttp()
                 .get('contas/grupo/'+id_grupo+(pagina ? '?page='+pagina : ''), response => {
                     this.contas = response.data;
                     this.paginacao = response.meta.links;
@@ -197,10 +194,13 @@ export default {
         }
     },
     created(){
+
         if(this.$store.getters.idGrupo){
             this.buscar(this.$store.getters.idGrupo);
         }
+
         this.carregarGrupos();
+        
     }
 }
 

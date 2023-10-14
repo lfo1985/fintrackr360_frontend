@@ -16,7 +16,9 @@ import {
     faPencil,
     faList,
     faMagnifyingGlass,
-    faClock
+    faClock,
+    faMinus,
+    faEquals
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faDiagramProject);
@@ -34,5 +36,7 @@ library.add(faPencil);
 library.add(faList);
 library.add(faMagnifyingGlass);
 library.add(faClock);
+library.add(faMinus);
+library.add(faEquals);
 
 export default FontAwesomeIcon;

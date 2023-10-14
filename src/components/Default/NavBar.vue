@@ -44,7 +44,7 @@
             <span style="font-size: 10pt;" class="navbar-text text-end d-flex align-items-center">
               <div class="text-end text-white me-3">{{ this.nome }}<br> <span class="fw-normal">{{ this.email }}</span></div>
               <router-link :to="{name: 'Logout'}" class="nav-link text-white">
-                <button @click="logout" class="btn btn-sm btn-info text-white mt-2 mb-2">Sair</button>
+                <button class="btn btn-sm btn-info text-white mt-2 mb-2">Sair</button>
               </router-link>
             </span>
           </div>

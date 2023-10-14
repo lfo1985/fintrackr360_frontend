@@ -149,10 +149,14 @@ function AxiosHttp(){
                     }
                 }
             }).catch(e => {
-                if(callbackErro != null){
-                    callbackErro(e.response.data);
+                if(e.response.status == 401){
+                    window.location = '#/login';
                 } else {
-                    window.location = '#/erro/'+e.response.status+'/'+btoa(e.response.data.msg);
+                    if(callbackErro != null){
+                        callbackErro(e.response.data);
+                    } else {
+                        window.location = '#/erro/'+e.response.status+'/'+btoa(e.response.data.msg);
+                    }
                 }
             });
     }

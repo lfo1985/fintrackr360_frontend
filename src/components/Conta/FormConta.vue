@@ -10,8 +10,7 @@
             <div class="mb-3 col-md-6">
                 <label 
                     for="titulo"
-                    class="form-label"
-                >
+                    class="form-label">
                     Título
                 </label>
                 <input 
@@ -20,14 +19,17 @@
                     id="nome"
                     aria-describedby="nomeGrupo"
                     v-model="conta.titulo"
-                    ref="titulo"
-                >
+                    ref="titulo">
+                <span 
+                    v-if="!conta.titulo && validacao" 
+                    class="small text-danger">
+                    Digite o título!
+                </span>
             </div>
             <div class="mb-3 col-md-2">
                 <label 
                     for="id_grupo"
-                    class="form-label"
-                >
+                    class="form-label">
                     Grupo
                 </label>
                 <select
@@ -35,7 +37,7 @@
                     class="form-select"
                     aria-label="Selecione o grupo"
                     :disabled="conta.id != null"
-                >
+                    ref="id_grupo">
                     <option 
                         v-for="grupo in grupos"
                         :key="grupo.id"
@@ -43,12 +45,16 @@
                         v-html="grupo.nome"
                     ></option>
                 </select>
+                <span 
+                    v-if="!conta.id_grupo && validacao" 
+                    class="small text-danger">
+                    Escolha um grupo!
+                </span>
             </div>
-            <div class="mb-3 col-md-1">
+            <div class="mb-3 col-md-2">
                 <label 
                     for="natureza"
-                    class="form-label"
-                >
+                    class="form-label">
                     Natureza
                 </label>
                 <select
@@ -56,7 +62,7 @@
                     v-model="conta.natureza"
                     aria-label="Selecione a natureza"
                     :disabled="conta.id != null"
-                >
+                    ref="natureza">
                     <option 
                         v-for="natureza in naturezas"
                         :key="natureza.id"
@@ -64,12 +70,16 @@
                         v-html="natureza.nome"
                     ></option>
                 </select>
+                <span 
+                    v-if="!conta.natureza && validacao" 
+                    class="small text-danger">
+                    Escolha uma natureza!
+                </span>
             </div>
             <div class="mb-3 col-md-2">
                 <label 
                     for="tipo"
-                    class="form-label"
-                >
+                    class="form-label">
                     Tipo
                 </label>
                 <select
@@ -78,7 +88,7 @@
                     aria-label="Selecione o tipo"
                     :disabled="conta.id != null"
                     @change="defineUmaParcela"
-                >
+                    ref="tipo">
                     <option 
                         v-for="tipo in tipos"
                         :key="tipo.id"
@@ -86,12 +96,16 @@
                         v-html="tipo.nome"
                     ></option>
                 </select>
+                <span 
+                    v-if="!conta.tipo && validacao" 
+                    class="small text-danger">
+                    Escolha um tipo!
+                </span>
             </div>
-            <div class="mb-3 col-md-1">
+            <div class="mb-3 col-md-2">
                 <label 
                     for="titulo"
-                    class="form-label"
-                >
+                    class="form-label">
                     Periodos
                 </label>
                 <input 
@@ -100,14 +114,17 @@
                     v-model="conta.periodos"
                     v-mask-number
                     ref="periodos"
-                    :disabled="conta.id != null || conta.tipo == 'A_VISTA'"
-                >
+                    :disabled="conta.id != null || conta.tipo == 'A_VISTA'">
+                <span 
+                    v-if="!conta.periodos && validacao" 
+                    class="small text-danger">
+                    Preencha a quantidade de períodos!
+                </span>
             </div>
             <div class="mb-3 col-md-1">
                 <label 
                     for="valor"
-                    class="form-label"
-                >
+                    class="form-label">
                     Valor
                 </label>
                 <input 
@@ -117,14 +134,17 @@
                     aria-describedby="valorConta"
                     v-model="conta.valor"
                     ref="valor"
-                    v-mask-decimal.br="2"
-                >
+                    v-mask-decimal.br="2">
+                <span 
+                    v-if="!conta.valor && validacao" 
+                    class="small text-danger">
+                    Informe o valor!
+                </span>
             </div>
             <div class="mb-3 col-md-2">
                 <label 
                     for="data_vencimento"
-                    class="form-label"
-                >
+                    class="form-label">
                     Vencimento
                 </label>
                 <input 
@@ -134,31 +154,41 @@
                     aria-describedby="dataVencimento"
                     v-model="conta.data_vencimento"
                     ref="data_vencimento"
-                    v-mask-date.br
-                >
+                    v-mask-date.br>
+                <span 
+                    v-if="!conta.data_vencimento && validacao" 
+                    class="small text-danger">
+                    Digite a data de vencimento!
+                </span>
             </div>
             <div class="mb-3 col-md-6">
                 <label 
                     for="descricao"
-                    class="form-label"
-                >
+                    class="form-label">
                     Descrição
                 </label>
-                <textarea class="form-control" v-model="conta.descricao" rows="3"></textarea>
+                <textarea 
+                    class="form-control"
+                    v-model="conta.descricao"
+                    rows="3"
+                    ref="descricao"></textarea>
+                <span 
+                    v-if="!conta.descricao && validacao" 
+                    class="small text-danger">
+                    Digite uma descrição!
+                </span>
             </div>
             <button
                 type="button"
                 class="btn btn-primary"
-                @click="salvar"
-            >
+                @click="salvar">
                 <fa icon="floppy-disk" class="me-1" />
                 Salvar
             </button>
             <button
                 type="button"
                 class="btn btn-secondary ms-2"
-                @click="voltar"
-            >
+                @click="voltar">
                 <fa icon="arrow-circle-left" class="me-1" />
                 Voltar
             </button>
@@ -187,6 +217,8 @@ export default {
                 tipo: null,
                 periodos: null
             },
+            validacao: false,
+            erroValidacao: false,
             tipos: [],
             grupos: [],
             naturezas: []
@@ -225,38 +257,91 @@ export default {
         },
         salvar: function(){
 
-            this.defineEstadoLoader(params.LOADER_SHOW);
+            this.validacao = true;
 
-            const callbackSalvar = () => {
-
-                this.defineEstadoLoader(params.LOADER_SHOW);
-                this.defineEstadoIdGrupo({idGrupo: this.conta.id_grupo});
-
-                ir({name: 'IndexConta'});
-                
-            }
-            if(this.$route.params.id){
-                AxiosHttp().put('contas/'+this.$route.params.id, this.conta, callbackSalvar);
+            if(!this.conta.titulo) {
+                this.erroValidacao = true;
+                this.focusTitulo();
+            } else if(!this.conta.id_grupo){
+                this.erroValidacao = true;
+                this.focusGrupo();
+            } else if(!this.conta.natureza){
+                this.erroValidacao = true;
+                this.focusNatureza();
+            } else if(!this.conta.tipo){
+                this.erroValidacao = true;
+                this.focusTipo();
+            } else if(!this.conta.periodos){
+                this.erroValidacao = true;
+                this.focusPeriodo();
+            } else if(!this.conta.valor){
+                this.erroValidacao = true;
+                this.focusValor();
+            } else if(!this.conta.data_vencimento){
+                this.erroValidacao = true;
+                this.focusVencimento();
+            } else if(!this.conta.descricao){
+                this.erroValidacao = true;
+                this.focusDescricao();
             } else {
-                AxiosHttp().post('contas', this.conta, callbackSalvar);
+                this.erroValidacao = false;
             }
+
+            if(!this.erroValidacao){
+                
+                this.defineEstadoLoader(params.LOADER_SHOW);
+    
+                const callbackSalvar = () => {
+    
+                    this.defineEstadoLoader(params.LOADER_SHOW);
+                    this.defineEstadoIdGrupo({idGrupo: this.conta.id_grupo});
+    
+                    ir({name: 'IndexConta'});
+                    
+                }
+                if(this.$route.params.id){
+                    AxiosHttp().put('contas/'+this.$route.params.id, this.conta, callbackSalvar);
+                } else {
+                    AxiosHttp().post('contas', this.conta, callbackSalvar);
+                }
+
+            }
+
 
         },
-        focusInput: function(){
+        focusTitulo: function(){
             this.$refs.titulo.focus();
         },
-        focusInputPeriodo: function(){
+        focusGrupo: function(){
+            this.$refs.id_grupo.focus();
+        },
+        focusNatureza: function(){
+            this.$refs.natureza.focus();
+        },
+        focusTipo: function(){
+            this.$refs.tipo.focus();
+        },
+        focusValor: function(){
+            this.$refs.valor.focus();
+        },
+        focusVencimento: function(){
+            this.$refs.data_vencimento.focus();
+        },
+        focusPeriodo: function(){
             this.$refs.periodos.focus();
+        },
+        focusDescricao: function(){
+            this.$refs.descricao.focus();
         },
         defineUmaParcela: function(){
             if(!this.conta.id){
                 this.conta.periodos = 1;
             }
-            this.focusInputPeriodo();
+            this.focusPeriodo();
         }
     },
     mounted(){
-        this.focusInput();
+        this.focusTitulo();
         this.buscar();
     },
     created(){

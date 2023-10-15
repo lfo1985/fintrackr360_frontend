@@ -48,10 +48,7 @@
                     <div class="col-md-1">
                         {{ conta.valor }}
                     </div>
-                    <div :class="{
-                        'col-md-1': conta.tipo != 'RECORRENTE',
-                        'col-md-3': conta.tipo == 'RECORRENTE'
-                    }">
+                    <div class="col-md-1">
                         {{ conta.nome_tipo }}
                     </div>
                     <div class="col-md-3 botoes-acao">

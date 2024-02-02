@@ -1,10 +1,8 @@
 <template>
     <div class="text-start">
-        <h5 class="bg-light d-block p-2 rounded">
-            <fa icon="list" />
-            <b>
-                Relatório
-            </b>
+        <h5 class="bg-light d-block p-2 rounded border">
+            <fa icon="money-bill-trend-up" class="me-2" />
+            Extrato das Finanças
         </h5>
         <div class="mt-4">
             <div class="row">
@@ -236,7 +234,7 @@ export default {
             dados: [],
             listaMeses: [],
             listaAnos: [],
-            mes: moment().format('M'),
+            mes: moment().format('MM'),
             ano: moment().format('Y'),
             totalCredito: 0,
             totalDebito: 0,

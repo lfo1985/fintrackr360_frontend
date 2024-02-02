@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand text-white" href="#">{{ config.titulo }} <small>{{ config.versao }}</small></a>
+        <a class="navbar-brand text-white" href="#">
+          <img :src="Logo" style="width: 160px;" alt="">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,7 +15,7 @@
                   :to="{name: 'Home'}" 
                   class="nav-link text-white"
                 >
-                  Dashboard
+                  Resumo
                 </router-link>
               </li>
               <li class="nav-item">
@@ -37,7 +39,7 @@
                   :to="{name: 'IndexRelatorio'}" 
                   class="nav-link text-white"
                 >
-                  Relatório
+                  Extrato
                 </router-link>
               </li>
             </ul>
@@ -57,6 +59,7 @@
 
 import Usuario from '@/helpers/Usuario';
 import { mapActions } from 'vuex';
+import Logo from '@/assets/FinTracker360.png';
 
 export default {
   name: 'NavBar',
@@ -64,7 +67,8 @@ export default {
   data(){
     return {
       nome: Usuario().get() != null ? Usuario().get()['name'] : null,
-      email: Usuario().get() != null ? Usuario().get()['email'] : null
+      email: Usuario().get() != null ? Usuario().get()['email'] : null,
+      Logo: Logo
     }
   },
   methods: {

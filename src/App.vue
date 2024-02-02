@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss">
 	#app {
-		font-family: 'Tahoma';
+		font-family: 'Segoe UI';
 		font-size: 12pt;
 		color: #2c3e50;
 	}

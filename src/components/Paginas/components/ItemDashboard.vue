@@ -1,13 +1,17 @@
 <template>
-    <h4>Dashboard</h4>
+    <h5 class="bg-light d-block p-2 rounded border">
+        <fa icon="pie-chart" class="me-2" />
+        Resumo Anual
+    </h5>
     <div class="mt-4">
         <div class="row">
-            <div class="mb-3 col-md-3">
+            <div class="mb-3 col-md-2">
                 <label 
                     for="ano"
                     class="form-label"
                 >
-                    Escolha o ano para filtrar os meses
+                    <fa icon="magnifying-glass" />
+                    Filtrar por ano
                 </label>
                 <select
                     class="form-select"
@@ -27,7 +31,6 @@
             </div>
         </div>
     </div>
-    <h6 v-if="dadosFiltrados.length > 0">Resumo de todos os meses do ano.</h6>
     <h6 class="text-danger" v-if="dadosFiltrados.length == 0">Nenhuma resultado para renderizar o dashboard.</h6>
     <div class="d-flex flex-wrap mt-4">
         <div v-for="(dado, i) in dadosFiltrados" :key="i" class="item-card card me-2 mb-2 col-md-3">
@@ -36,18 +39,18 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-success">
-                    <fa icon="plus" class="me-2" />
-                    Crédito: R$ {{ dado.C }}
+                    <fa icon="plus-circle" class="me-2" />
+                    Crédito: R$ {{ dado.C || '0,00' }}
                 </li>
                 <li class="list-group-item text-danger">
-                    <fa icon="minus" class="me-2" />
-                    Débito: R$ {{ dado.D }}
+                    <fa icon="minus-circle" class="me-2" />
+                    Débito: R$ {{ dado.D || '0,00' }}
                 </li>
                 <li class="list-group-item">
                     <span
                         :class="'text-'+dado.CLASSE_SALDO">
                         <fa icon="equals" class="me-2" />
-                        Saldo: R$ {{ dado.SALDO }}
+                        Saldo: R$ {{ dado.SALDO || '0,00' }}
                     </span>
                 </li>
                 <li style="background-color: #f6f6f6;" class="list-group-item">

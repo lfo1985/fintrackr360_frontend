@@ -18,7 +18,11 @@ import {
     faMagnifyingGlass,
     faClock,
     faMinus,
-    faEquals
+    faEquals,
+    faPieChart,
+    faMoneyBillTrendUp,
+    faPlusCircle,
+    faMinusCircle
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faDiagramProject);
@@ -38,5 +42,9 @@ library.add(faMagnifyingGlass);
 library.add(faClock);
 library.add(faMinus);
 library.add(faEquals);
+library.add(faPieChart);
+library.add(faMoneyBillTrendUp);
+library.add(faPlusCircle);
+library.add(faMinusCircle);
 
 export default FontAwesomeIcon;

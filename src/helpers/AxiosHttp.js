@@ -24,6 +24,7 @@ function AxiosHttp(){
                 if(callbackErro != null){
                     callbackErro(e.response.data);
                 } else {
+                    console.log(e);
                     if(e.response.status == 401){
                         Token().remove();
                         Usuario().remove();

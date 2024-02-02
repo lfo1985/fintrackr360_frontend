@@ -1,10 +1,8 @@
 <template>
     <div class="text-start">
-        <h5 class="bg-light d-block p-2 rounded">
-            <fa icon="list" />
-            <b>
-                Grupos
-            </b>
+        <h5 class="bg-light d-block p-2 rounded border">
+            <fa icon="pencil" class="me-2" />
+            Grupos
         </h5>
         <router-link :to="{name: 'FormGrupo'}">
             <button class="btn btn-success mt-2">

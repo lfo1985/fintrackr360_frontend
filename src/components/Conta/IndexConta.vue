@@ -1,10 +1,8 @@
 <template>
     <div class="text-start">
-        <h5 class="bg-light d-block p-2 rounded">
-            <fa icon="list" />
-            <b>
-                Contas
-            </b>
+        <h5 class="bg-light d-block p-2 rounded border">
+            <fa icon="pencil" class="me-2" />
+            Contas
         </h5>
         <div class="botoes-superiores mt-3">
             <router-link :to="{name: 'FormConta'}">

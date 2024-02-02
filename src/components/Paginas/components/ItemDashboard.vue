@@ -34,30 +34,34 @@
     <h6 class="text-danger" v-if="dadosFiltrados.length == 0">Nenhuma resultado para renderizar o dashboard.</h6>
     <div class="d-flex flex-wrap mt-4">
         <div v-for="(dado, i) in dadosFiltrados" :key="i" class="item-card card me-2 mb-2 col-md-3">
-            <div class="card-header fw-bold">
+            <div class="card-header bg-dark text-white fw-bold">
                 {{ dado.MES_EXTENSO }}
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item text-success">
-                    <fa icon="plus-circle" class="me-2" />
-                    Crédito: R$ {{ dado.C || '0,00' }}
-                </li>
-                <li class="list-group-item text-danger">
-                    <fa icon="minus-circle" class="me-2" />
-                    Débito: R$ {{ dado.D || '0,00' }}
-                </li>
                 <li class="list-group-item">
-                    <span
-                        :class="'text-'+dado.CLASSE_SALDO">
-                        <fa icon="equals" class="me-2" />
-                        Saldo: R$ {{ dado.SALDO || '0,00' }}
-                    </span>
+                    <div class="row">
+                        <div class="col-md-4 text-success">
+                            <fa icon="plus-circle" class="me-2" />
+                            R$ {{ dado.C || '0,00' }}
+                        </div>
+                        <div class="col-md-4 text-danger">
+                            <fa icon="minus-circle" class="me-2" />
+                            R$ {{ dado.D || '0,00' }}
+                        </div>
+                        <div class="col-md-4">
+                            <span
+                                :class="'text-'+dado.CLASSE_SALDO">
+                                    <fa icon="equals" class="me-2" />
+                                    R$ {{ dado.SALDO || '0,00' }}
+                            </span>
+                        </div>
+                    </div>
+                    
                 </li>
                 <li style="background-color: #f6f6f6;" class="list-group-item">
                     <span
                         :class="'text-'+dado.CLASSE_ACUMULADO+' fw-bold'">
-                        <fa icon="equals" class="me-2" />
-                        Saldo Ac.: R$ {{ dado.SALDO_ACUMULADO }}
+                        Saldo Acumulado: R$ {{ dado.SALDO_ACUMULADO }}
                     </span>
                 </li>
             </ul>

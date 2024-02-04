@@ -38,6 +38,7 @@ export default {
 	},
 	mounted(){
 		this.buscar();
+		console.log(location.hostname);
 	}
 }
 </script>
